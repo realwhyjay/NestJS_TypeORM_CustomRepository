@@ -1,16 +1,17 @@
-import { Client } from 'src/clients/client.entity';
+import { User } from 'src/users/user.entity';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  OneToMany,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
-export class User {
+export class Client {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -20,8 +21,12 @@ export class User {
   @Column({ nullable: false })
   age: number;
 
-  @OneToMany(() => Client, (client) => client.user)
-  clients: Client[];
+  @ManyToOne(() => User, (user) => user.clients, {
+    nullable: false,
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 
   @CreateDateColumn()
   created_at: Date;
