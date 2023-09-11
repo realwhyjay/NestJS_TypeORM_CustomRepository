@@ -9,7 +9,7 @@ export class ClientRepository extends Repository<Client> {
     @InjectRepository(Client)
     private readonly repository: Repository<Client>,
   ) {
-    super(repository.target, repository.manager);
+    super(repository.target, repository.manager, repository.queryRunner);
   }
 
   async getClientIds() {
